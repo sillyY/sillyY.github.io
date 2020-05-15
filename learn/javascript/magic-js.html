@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>神奇的JS骚操作 | sillyY</title>
+    <meta name="description" content="Just playing around">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    
+    <link rel="preload" href="/assets/css/0.styles.28ef1fef.css" as="style"><link rel="preload" href="/assets/js/app.8dae8355.js" as="script"><link rel="preload" href="/assets/js/2.dc92909d.js" as="script"><link rel="preload" href="/assets/js/38.dbf816f4.js" as="script"><link rel="prefetch" href="/assets/js/10.e98d4025.js"><link rel="prefetch" href="/assets/js/11.5587c763.js"><link rel="prefetch" href="/assets/js/12.2d3c60f5.js"><link rel="prefetch" href="/assets/js/13.eaa7ea73.js"><link rel="prefetch" href="/assets/js/14.f6fe8d5b.js"><link rel="prefetch" href="/assets/js/15.17160c19.js"><link rel="prefetch" href="/assets/js/16.612f97fd.js"><link rel="prefetch" href="/assets/js/17.4ace0302.js"><link rel="prefetch" href="/assets/js/18.6e13a193.js"><link rel="prefetch" href="/assets/js/19.c2c41b36.js"><link rel="prefetch" href="/assets/js/20.86ab84d4.js"><link rel="prefetch" href="/assets/js/21.51b2926e.js"><link rel="prefetch" href="/assets/js/22.68ae5fa7.js"><link rel="prefetch" href="/assets/js/23.46ee807b.js"><link rel="prefetch" href="/assets/js/24.ba851b1c.js"><link rel="prefetch" href="/assets/js/25.04343082.js"><link rel="prefetch" href="/assets/js/26.c3095e35.js"><link rel="prefetch" href="/assets/js/27.a40569d3.js"><link rel="prefetch" href="/assets/js/28.8f598cb4.js"><link rel="prefetch" href="/assets/js/29.715a5b6b.js"><link rel="prefetch" href="/assets/js/3.4df34556.js"><link rel="prefetch" href="/assets/js/30.fe812dba.js"><link rel="prefetch" href="/assets/js/31.f1550050.js"><link rel="prefetch" href="/assets/js/32.8c90a456.js"><link rel="prefetch" href="/assets/js/33.9515fed6.js"><link rel="prefetch" href="/assets/js/34.103c5784.js"><link rel="prefetch" href="/assets/js/35.ed96bf70.js"><link rel="prefetch" href="/assets/js/36.03c7586b.js"><link rel="prefetch" href="/assets/js/37.1f6cd2c2.js"><link rel="prefetch" href="/assets/js/39.4387a0c9.js"><link rel="prefetch" href="/assets/js/4.8ca31cab.js"><link rel="prefetch" href="/assets/js/40.2830a92f.js"><link rel="prefetch" href="/assets/js/41.66cdba68.js"><link rel="prefetch" href="/assets/js/42.d3e87825.js"><link rel="prefetch" href="/assets/js/5.ed1cff9d.js"><link rel="prefetch" href="/assets/js/6.a180e42e.js"><link rel="prefetch" href="/assets/js/7.101c3ea0.js"><link rel="prefetch" href="/assets/js/8.38b06e0d.js"><link rel="prefetch" href="/assets/js/9.5d56b8fe.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.28ef1fef.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">sillyY</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title">🌟博客</span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/frontEnd/" class="nav-link">前端</a></li><li class="dropdown-item"><!----> <a href="/backEnd/" class="nav-link">后端</a></li><li class="dropdown-item"><!----> <a href="/tools/" class="nav-link">工具</a></li></ul></div></div><div class="nav-item"><a href="/learn/" class="nav-link router-link-active">📚学习</a></div><div class="nav-item"><a href="/todo/" class="nav-link">💡Todo</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title">💻项目</span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="http://sillyy.cn/TemplateCLI-Extension/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Template
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://sillyy.cn/ele-vue/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  ele-vue
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://sillyy.cn/diff-dir-file/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  diff-dir-file
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://sillyy.cn/vuepress-plugin-code-segment/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  vuepress-plugin-code-segment
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul></div></div><div class="nav-item"><a href="https://github.com/sillyY" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title">🌟博客</span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/frontEnd/" class="nav-link">前端</a></li><li class="dropdown-item"><!----> <a href="/backEnd/" class="nav-link">后端</a></li><li class="dropdown-item"><!----> <a href="/tools/" class="nav-link">工具</a></li></ul></div></div><div class="nav-item"><a href="/learn/" class="nav-link router-link-active">📚学习</a></div><div class="nav-item"><a href="/todo/" class="nav-link">💡Todo</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title">💻项目</span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="http://sillyy.cn/TemplateCLI-Extension/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Template
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://sillyy.cn/ele-vue/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  ele-vue
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://sillyy.cn/diff-dir-file/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  diff-dir-file
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://sillyy.cn/vuepress-plugin-code-segment/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  vuepress-plugin-code-segment
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul></div></div><div class="nav-item"><a href="https://github.com/sillyY" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/learn/" class="sidebar-link">学无止境</a></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>CSS</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>JavaScript</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/learn/javascript/magic-js.html" class="active sidebar-link">神奇的JS骚操作</a></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="神奇的js骚操作"><a href="#神奇的js骚操作" aria-hidden="true" class="header-anchor">#</a> 神奇的JS骚操作</h1> <ol><li>使用左移运算符 <code>&lt;&lt;</code> 迅速得出2的次方</li></ol> <div class="language- extra-class"><pre class="language-text"><code>1 &lt;&lt; 2 // 4
+2 &lt;&lt; 10 // 1024
+
+// 使用场景
+a = 2e9;   // 2000000000
+a &lt;&lt; 1;    // -294967296
+</code></pre></div><ol start="2"><li>私用 <code>^</code> 切换变量0或1</li></ol> <blockquote><p>^=是异或运算，相同取0，不同取1.</p></blockquote> <div class="tip custom-block"><p>3^4 = 7<br>
+十进制转二进制: parseInt(3).toString(2) =&gt; &quot;011&quot;, parseInt(4).toString(2) =&gt; &quot;100&quot;<br>
+0 1 1<br>
+1 0 0<br>
+1 1 1<br>
+二进制转十进制: parseInt(111, 2) =&gt; 7</p></div> <div class="language- extra-class"><pre class="language-text"><code>// --- before ---
+// if
+if(toggle) {
+    toggle = 0
+}else {
+    toggle = 1
+}
+
+// 三目运算符
+toggle = toggle ? 0 : 1
+
+// --- after ---
+toggle ^= 1
+</code></pre></div><ol start="3"><li>使用 <code>&amp;</code> 判断奇偶性</li></ol> <blockquote><p>偶数&amp;1 = 0
+奇数&amp;1 = 1</p></blockquote> <div class="language- extra-class"><pre class="language-text"><code>console.log(7&amp;1);  // 1
+console.log(8&amp;1); // 0
+</code></pre></div><ol start="4"><li>使用 <code>!!</code> 将数字转为布尔值</li></ol> <div class="danger custom-block"><p>下面6种值转化为布尔值时为false，其他转化都为true</p> <ul><li>undefined（未定义，找不到值时出现）</li> <li>null（代表空值）</li> <li>false（布尔值的false，字符串&quot;false&quot;布尔值为true）</li> <li>0（数字0，字符串&quot;0&quot;布尔值为true）</li> <li>NaN（无法计算结果时出现，表示&quot;非数值&quot;；但是typeof NaN===&quot;number&quot;）</li> <li>&quot;&quot;（双引号）或''（单引号） （空字符串，中间有空格时也是true）</li></ul></div> <div class="language- extra-class"><pre class="language-text"><code>console.log(!!7) // true
+console.log(!!0) // false
+console.log(!!-1) // true
+console.log(!!0.71) // true
+</code></pre></div><ol start="5"><li>使用 <code>~~</code>、<code>&gt;&gt; 0</code>、<code>&lt;&lt; 0</code>、<code>&gt;&gt;&gt; 0</code>、<code>| 0</code>来取整
+相当于 使用了Math.floor()</li></ol> <blockquote><p>注意&gt;&gt;&gt;不可对负数取整</p></blockquote> <div class="language- extra-class"><pre class="language-text"><code>console.log(~~11.71) // 11
+console.log(11.71 &gt;&gt; 0) // 11
+console.log(11.71 &lt;&lt; 0) // 11
+console.log(11.71 | 0) // 11
+console.log(11.71 &gt;&gt;&gt; 0) // 11
+</code></pre></div><ol start="6"><li>使用 <code>^</code> 来完成值交换</li></ol> <blockquote><p>目前推崇ES6解构赋值</p></blockquote> <div class="language- extra-class"><pre class="language-text"><code>// --- before ---
+let temp = a; a = b; b = temp; // 传统方案
+b = [a, a = b][0] // 借助数组
+
+// --- after ---
+let a = 7
+let b = 1
+a ^= b
+b ^= a
+a ^= b
+
+console.log(a) // 1
+console.log(b) // 7
+
+[a, b] = [b, a] // ES6， 解构赋值
+</code></pre></div><ol start="7"><li>使用 <code>^</code> 判断符号是否相同（正负数）
+(a ^ b) &gt;= 0; // true 相同； false 不相同</li></ol> <div class="language- extra-class"><pre class="language-text"><code>(-1 ^ 11) &gt;= 0 // false
+(2 ^ 9) &gt;= 0 // true
+</code></pre></div><ol start="8"><li>使用 ^ 来检查数字是否不相等</li></ol> <div class="language- extra-class"><pre class="language-text"><code>// --- before ---
+if(a !== 5) {...}
+
+// --- after ---
+if(a ^ 5) {...}
+</code></pre></div><p>9.使用 <code>n&amp;(n-1) === 0</code> 判断是否为2的整数幂</p> <div class="language- extra-class"><pre class="language-text"><code>var n = 24
+n &amp; (n - 1) // 16 
+
+var n = 64
+n &amp; (n - 1) // 0
+</code></pre></div><ol start="10"><li>使用 <code>A + 0.5 | 0</code> 来替代Math.round()</li></ol> <div class="language- extra-class"><pre class="language-text"><code>var A = 24.7
+A + 0.5 | 0 // =&gt; 25
+
+var A = -24.7
+A - 0.5 | 0 // =&gt; -25
+</code></pre></div><ol start="11"><li>使用 <code>toString(16)</code> 取随机字符串</li></ol> <blockquote><p>.substring() 的第二个参数控制取多少位 (最多可取13位)</p></blockquote> <div class="language- extra-class"><pre class="language-text"><code>Math.random().toString(16).substring(2, 15);
+// =&gt; &quot;a580e0b1817b&quot;
+
+Math.random().toString(16).substring(2, 30);
+// =&gt; &quot;9cbbd145aa5fc&quot;
+</code></pre></div><ol start="12"><li>使用 <code>split(0)</code></li></ol> <blockquote><p>使用数字来做为 split 的分隔条件可以节省2字节</p></blockquote> <div class="language- extra-class"><pre class="language-text"><code>// --- before ---
+&quot;alpha,bravo,charlie&quot;.split(&quot;,&quot;);
+
+// --- after ---
+&quot;alpha0bravo0charlie&quot;.split(0);
+</code></pre></div><ol start="13"><li>使用 <code>.link()</code> 创建链接</li></ol> <blockquote><p>可以快速创建 a 标签</p></blockquote> <div class="language- extra-class"><pre class="language-text"><code>// --- before ---
+let b = `&lt;a herf=&quot;www.google.com&quot;&gt;google&lt;/a&gt;`;
+
+// --- after ---
+let b = 'google'.link('www.google.com');
+</code></pre></div><ol start="14"><li>使用 <code>Array</code> 来重复字符</li></ol> <div class="language- extra-class"><pre class="language-text"><code>// --- before ---
+for(let a = &quot;&quot;, i = 7; i--;) a+=0
+
+// --- after ---
+let b = Array(7).join(0); // &quot;0000000&quot;
+let c = Array(7).join('La') // &quot;LaLaLaLaLaLa&quot;
+
+// ES6
+let d = &quot;0&quot;.repeat(7); // &quot;0000000&quot;
+</code></pre></div><ol start="15"><li>使用当前时间创建一个随机数</li></ol> <blockquote><p>不要在快速循环中使用，因为毫秒可能没有变化；</p></blockquote> <div class="language- extra-class"><pre class="language-text"><code>// --- before ---
+let b = 0 | Math.random() * 100
+
+// --- after ---
+let a;
+a = new Date % 100; // 两位随机数
+a = new Date % 1000; // 三位随机数
+a = new Date % 10000; // 四位随机数...依次类推
+</code></pre></div><ol start="16"><li>一些可以代替 <code>undefined</code> 的操作</li></ol> <ul><li>&quot;&quot;.<em>, 1..</em> 和 0[0]</li> <li>void 0 // =&gt; 推崇</li></ul> <ol start="17"><li>使用 <code>1/0</code> 来代替 <code>Infinity</code></li></ol> <div class="language- extra-class"><pre class="language-text"><code>// --- before ---
+[Infinity, -Infinity]
+
+// --- after ---
+[1/0, -1/0]
+</code></pre></div><ol start="18"><li>使用 <code>Array.length = 0</code> 来清空数组</li></ol> <div class="language- extra-class"><pre class="language-text"><code>let arr = [1, 2, 3]
+arr.length = 0
+
+arr // =&gt; []
+</code></pre></div><ol start="19"><li>使用 <code>Array.slice(0)</code> 实现数组浅拷贝</li></ol> <div class="language- extra-class"><pre class="language-text"><code>let arr = [0, 1, 2, 3]
+
+arr.slice(0) // =&gt; [0, 1, 2, 3]
+</code></pre></div><ol start="20"><li>使用 <code>!+&quot;\v1&quot;</code> 快速判断 IE8 以下的浏览器</li></ol> <div class="language- extra-class"><pre class="language-text"><code>var isIE8 = !+&quot;\v1&quot; 
+
+// Chrome false
+// IE9(10, 11) false
+// IE8(7, 6, 5) true
+</code></pre></div><ol start="21"><li>for循环条件的简写</li></ol> <div class="language- extra-class"><pre class="language-text"><code>// --- before ---
+for(let i = 0; i &lt; arr.length; i++) {...}
+
+// --- after ---
+for(let i = arr.length; i--;) {...} // 注意 i--后面的分号不可漏
+</code></pre></div><h4 id="参考文献"><a href="#参考文献" aria-hidden="true" class="header-anchor">#</a> 参考文献</h4> <ul><li>[1]布拉德特皮. <a href="https://juejin.im/post/5e044eb5f265da33b50748c8#heading-3" target="_blank" rel="noopener noreferrer">JavaScript 那些写出来会被同事揍的骚操作<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>[OL] 掘金</li></ul></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">上次更新: </span> <span class="time">2019-12-30 11:08:07</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/learn/css/selector-rule.html" class="prev">
+          CSS选择器优先级规则
+        </a></span> <!----></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.8dae8355.js" defer></script><script src="/assets/js/2.dc92909d.js" defer></script><script src="/assets/js/38.dbf816f4.js" defer></script>
+  </body>
+</html>

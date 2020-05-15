@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>JavaScript 设计模式 | sillyY</title>
+    <meta name="description" content="Just playing around">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    
+    <link rel="preload" href="/assets/css/0.styles.28ef1fef.css" as="style"><link rel="preload" href="/assets/js/app.8dae8355.js" as="script"><link rel="preload" href="/assets/js/2.dc92909d.js" as="script"><link rel="preload" href="/assets/js/15.17160c19.js" as="script"><link rel="preload" href="/assets/js/6.a180e42e.js" as="script"><link rel="prefetch" href="/assets/js/10.e98d4025.js"><link rel="prefetch" href="/assets/js/11.5587c763.js"><link rel="prefetch" href="/assets/js/12.2d3c60f5.js"><link rel="prefetch" href="/assets/js/13.eaa7ea73.js"><link rel="prefetch" href="/assets/js/14.f6fe8d5b.js"><link rel="prefetch" href="/assets/js/16.612f97fd.js"><link rel="prefetch" href="/assets/js/17.4ace0302.js"><link rel="prefetch" href="/assets/js/18.6e13a193.js"><link rel="prefetch" href="/assets/js/19.c2c41b36.js"><link rel="prefetch" href="/assets/js/20.86ab84d4.js"><link rel="prefetch" href="/assets/js/21.51b2926e.js"><link rel="prefetch" href="/assets/js/22.68ae5fa7.js"><link rel="prefetch" href="/assets/js/23.46ee807b.js"><link rel="prefetch" href="/assets/js/24.ba851b1c.js"><link rel="prefetch" href="/assets/js/25.04343082.js"><link rel="prefetch" href="/assets/js/26.c3095e35.js"><link rel="prefetch" href="/assets/js/27.a40569d3.js"><link rel="prefetch" href="/assets/js/28.8f598cb4.js"><link rel="prefetch" href="/assets/js/29.715a5b6b.js"><link rel="prefetch" href="/assets/js/3.4df34556.js"><link rel="prefetch" href="/assets/js/30.fe812dba.js"><link rel="prefetch" href="/assets/js/31.f1550050.js"><link rel="prefetch" href="/assets/js/32.8c90a456.js"><link rel="prefetch" href="/assets/js/33.9515fed6.js"><link rel="prefetch" href="/assets/js/34.103c5784.js"><link rel="prefetch" href="/assets/js/35.ed96bf70.js"><link rel="prefetch" href="/assets/js/36.03c7586b.js"><link rel="prefetch" href="/assets/js/37.1f6cd2c2.js"><link rel="prefetch" href="/assets/js/38.dbf816f4.js"><link rel="prefetch" href="/assets/js/39.4387a0c9.js"><link rel="prefetch" href="/assets/js/4.8ca31cab.js"><link rel="prefetch" href="/assets/js/40.2830a92f.js"><link rel="prefetch" href="/assets/js/41.66cdba68.js"><link rel="prefetch" href="/assets/js/42.d3e87825.js"><link rel="prefetch" href="/assets/js/5.ed1cff9d.js"><link rel="prefetch" href="/assets/js/7.101c3ea0.js"><link rel="prefetch" href="/assets/js/8.38b06e0d.js"><link rel="prefetch" href="/assets/js/9.5d56b8fe.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.28ef1fef.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">sillyY</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title">🌟博客</span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/frontEnd/" class="nav-link router-link-active">前端</a></li><li class="dropdown-item"><!----> <a href="/backEnd/" class="nav-link">后端</a></li><li class="dropdown-item"><!----> <a href="/tools/" class="nav-link">工具</a></li></ul></div></div><div class="nav-item"><a href="/learn/" class="nav-link">📚学习</a></div><div class="nav-item"><a href="/todo/" class="nav-link">💡Todo</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title">💻项目</span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="http://sillyy.cn/TemplateCLI-Extension/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Template
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://sillyy.cn/ele-vue/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  ele-vue
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://sillyy.cn/diff-dir-file/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  diff-dir-file
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://sillyy.cn/vuepress-plugin-code-segment/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  vuepress-plugin-code-segment
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul></div></div><div class="nav-item"><a href="https://github.com/sillyY" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title">🌟博客</span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/frontEnd/" class="nav-link router-link-active">前端</a></li><li class="dropdown-item"><!----> <a href="/backEnd/" class="nav-link">后端</a></li><li class="dropdown-item"><!----> <a href="/tools/" class="nav-link">工具</a></li></ul></div></div><div class="nav-item"><a href="/learn/" class="nav-link">📚学习</a></div><div class="nav-item"><a href="/todo/" class="nav-link">💡Todo</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title">💻项目</span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="http://sillyy.cn/TemplateCLI-Extension/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Template
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://sillyy.cn/ele-vue/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  ele-vue
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://sillyy.cn/diff-dir-file/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  diff-dir-file
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://sillyy.cn/vuepress-plugin-code-segment/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  vuepress-plugin-code-segment
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul></div></div><div class="nav-item"><a href="https://github.com/sillyY" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/frontEnd/" class="sidebar-link">欢迎</a></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>HTML</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>CSS</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>JavaScript</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Node</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>React</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Vue</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>小程序</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>杂类</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>网络协议</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Git</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>函数式编程</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>算法</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>设计模式</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/frontEnd/design/Common-Design.html" class="active sidebar-link">常用设计模式归纳</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#单例模式" class="sidebar-link">单例模式</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#常用场景" class="sidebar-link">常用场景</a></li><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#惰性单例" class="sidebar-link">惰性单例</a></li></ul></li><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#策略模式" class="sidebar-link">策略模式</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#常用场景-2" class="sidebar-link">常用场景</a></li><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#👉-解决方案" class="sidebar-link">👉 解决方案</a></li></ul></li><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#代理模式" class="sidebar-link">代理模式</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#常用场景-3" class="sidebar-link">常用场景</a></li><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#👉-解决方案-2" class="sidebar-link">👉 解决方案</a></li></ul></li><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#迭代器模式" class="sidebar-link">迭代器模式</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#常用场景-4" class="sidebar-link">常用场景</a></li><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#👉-解决方案-3" class="sidebar-link">👉 解决方案</a></li></ul></li><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#发布-订阅模式" class="sidebar-link">发布-订阅模式</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#常用场景-5" class="sidebar-link">常用场景</a></li><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#👉-解决方案-4" class="sidebar-link">👉 解决方案</a></li></ul></li><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#命令模式" class="sidebar-link">命令模式</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#常用场景-6" class="sidebar-link">常用场景</a></li><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#👉-解决方案-5" class="sidebar-link">👉 解决方案</a></li></ul></li><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#组合模式" class="sidebar-link">组合模式</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#常用场景-7" class="sidebar-link">常用场景</a></li><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#👉-解决方案-6" class="sidebar-link">👉 解决方案</a></li></ul></li><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#模板方法模式" class="sidebar-link">模板方法模式</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#常用场景-8" class="sidebar-link">常用场景</a></li><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#👉-解决方案-7" class="sidebar-link">👉 解决方案</a></li></ul></li><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#享元模式" class="sidebar-link">享元模式</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#常用场景-9" class="sidebar-link">常用场景</a></li><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#👉-解决方案-8" class="sidebar-link">👉 解决方案</a></li></ul></li><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#职责链模式" class="sidebar-link">职责链模式</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#常用场景-10" class="sidebar-link">常用场景</a></li><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#👉-解决方案-9" class="sidebar-link">👉 解决方案</a></li></ul></li><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#中介者模式" class="sidebar-link">中介者模式</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#常用场景-11" class="sidebar-link">常用场景</a></li><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#👉-解决方案-10" class="sidebar-link">👉 解决方案</a></li><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#note" class="sidebar-link">Note</a></li></ul></li><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#装饰者模式" class="sidebar-link">装饰者模式</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#常用场景-12" class="sidebar-link">常用场景</a></li><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#👉-解决方案-11" class="sidebar-link">👉 解决方案</a></li></ul></li><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#状态模式" class="sidebar-link">状态模式</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#常用场景-13" class="sidebar-link">常用场景</a></li><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#👉-解决方案-12" class="sidebar-link">👉 解决方案</a></li></ul></li><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#适配器模式" class="sidebar-link">适配器模式</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#常用场景-14" class="sidebar-link">常用场景</a></li><li class="sidebar-sub-header"><a href="/frontEnd/design/Common-Design.html#👉-解决方案-13" class="sidebar-link">👉 解决方案</a></li></ul></li></ul></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>源码阅读</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="javascript-设计模式"><a href="#javascript-设计模式" aria-hidden="true" class="header-anchor">#</a> JavaScript 设计模式</h1> <p>最近在看<code>曾探</code>的《JavaScript 设计模式与开发实践》，从中有所收获。<br>
+故在此记录下常用的设计模式，持续更新中...</p> <h2 id="单例模式"><a href="#单例模式" aria-hidden="true" class="header-anchor">#</a> 单例模式</h2> <p>常用于创建单一的对象，创建时判断对象是否已存在，如果已存在，则返回当前对象。</p> <h3 id="常用场景"><a href="#常用场景" aria-hidden="true" class="header-anchor">#</a> 常用场景</h3> <ul><li>登录弹窗</li> <li>Electron 创建窗口</li> <li>更多...</li></ul> <h3 id="惰性单例"><a href="#惰性单例" aria-hidden="true" class="header-anchor">#</a> 惰性单例</h3> <p>惰性单例即在需要的时候才创建对象实例。</p> <div class="language- extra-class"><pre class="language-text"><code>var getSingle = function(fn) {
+    var result;
+    return function() {
+        return result || result = fn.apply(this, arguments)
+    }
+}
+</code></pre></div><p>比如：创建单例窗口</p> <div class="language- extra-class"><pre class="language-text"><code>var createPopup = function() {
+    // 创建弹窗逻辑
+    ...省略
+}
+
+var createSinglePopup = getSingle(createPopup)
+
+document.getElementById('popup').onclick = function() {
+    var popup = createSinglePopup()
+    popup.style.display = 'block'
+}
+</code></pre></div><h2 id="策略模式"><a href="#策略模式" aria-hidden="true" class="header-anchor">#</a> 策略模式</h2> <p>定义一系列的算法，把它们一个个封装起来，并且使他们可以相互替换、</p> <h3 id="常用场景-2"><a href="#常用场景-2" aria-hidden="true" class="header-anchor">#</a> 常用场景</h3> <ul><li>if-else 可读性问题</li> <li>表单验证问题</li> <li>奖金计算问题</li> <li>更多...</li></ul> <h3 id="👉-解决方案"><a href="#👉-解决方案" aria-hidden="true" class="header-anchor">#</a> 👉 解决方案</h3> <div class="language- extra-class"><pre class="language-text"><code>var S = function( salary ){     
+    return salary * 4;
+};
+var A = function( salary ){
+    return salary * 3;
+};
+var B = function( salary ){
+     return salary * 2;
+};
+
+var calculateBonus = function( func, salary ){
+     return func( salary );
+};
+
+calculateBonus( S, 10000  );    // 输出：40000
+</code></pre></div><h2 id="代理模式"><a href="#代理模式" aria-hidden="true" class="header-anchor">#</a> 代理模式</h2> <p>代理模式是为一个对象提供一个代用品或占位符，以便控制对它的访问。</p> <h3 id="常用场景-3"><a href="#常用场景-3" aria-hidden="true" class="header-anchor">#</a> 常用场景</h3> <ul><li>虚拟代理(真正需要的时候才取创建)<br>
+比如: 图片预加载、HTTP 请求</li> <li>缓存代理<br>
+比如: ajax 请求数据</li> <li>更多...</li></ul> <h3 id="👉-解决方案-2"><a href="#👉-解决方案-2" aria-hidden="true" class="header-anchor">#</a> 👉 解决方案</h3> <div class="language- extra-class"><pre class="language-text"><code>var myImage = (function(){     
+    var imgNode = document.createElement('img');
+    document.body.appendChild(imgNode);
+    return function(src){         
+         imgNode.src = src;     
+    }
+})();
+
+var proxyImage = (function(){     
+    var img = new Image();     
+    img.onload = function(){         
+        myImage(this.src);     
+    }     
+    return function(src){         
+        myImage('占位图');         
+        img.src = src;     
+    }
+})();
+
+proxyImage('path');
+
+</code></pre></div><h2 id="迭代器模式"><a href="#迭代器模式" aria-hidden="true" class="header-anchor">#</a> 迭代器模式</h2> <p>迭代器模式是指提供一种方法顺序访问一个聚合对象中的各个元素，而又不需要暴露该对象的内部表示。</p> <h3 id="常用场景-4"><a href="#常用场景-4" aria-hidden="true" class="header-anchor">#</a> 常用场景</h3> <ul><li>迭代数组和对象</li> <li>更多...</li></ul> <h3 id="👉-解决方案-3"><a href="#👉-解决方案-3" aria-hidden="true" class="header-anchor">#</a> 👉 解决方案</h3> <div class="language- extra-class"><pre class="language-text"><code>var each = function( ary, callback ){     
+    for ( var i = 0, l = ary.length; i &lt; l; i++ ){     
+        callback.call( ary[i], i, ary[ i ] );  // 把下标和元素当作参数传给callback函数
+    }
+};
+
+each( [ 1, 2, 3 ], function( i, n ){
+    alert ( [ i, n ] );
+});
+</code></pre></div><h2 id="发布-订阅模式"><a href="#发布-订阅模式" aria-hidden="true" class="header-anchor">#</a> 发布-订阅模式</h2> <p>发布—订阅模式又叫观察者模式，它定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都将得到通知。</p> <h3 id="常用场景-5"><a href="#常用场景-5" aria-hidden="true" class="header-anchor">#</a> 常用场景</h3> <ul><li>DOM 绑定</li> <li>订阅功能</li> <li>更多...</li></ul> <h3 id="👉-解决方案-4"><a href="#👉-解决方案-4" aria-hidden="true" class="header-anchor">#</a> 👉 解决方案</h3> <div class="language- extra-class"><pre class="language-text"><code>var event = {
+  clientList: [],
+  listen: function(key, fn) {
+    if (!this.clientList[key]) {
+      this.clientList[key] = []
+    }
+    this.clientList[key].push(fn) // 订阅的消息添加进缓存列表
+  },
+  trigger: function() {
+    var key = Array.prototype.shift.call(arguments), // (1);
+      fns = this.clientList[key]
+
+    if (!fns || fns.length === 0) {
+      // 如果没有绑定对应的消息
+      return false
+    }
+    for (var i = 0, fn; (fn = fns[i++]); ) {
+      fn.apply(this, arguments) // (2) // arguments 是trigger时带上的参数
+    }
+  }
+}
+
+var installEvent = function(obj) {
+  for (var i in event) {
+    obj[i] = event[i]
+  }
+}
+
+
+// usage
+var salesOffices = {}
+installEvent(salesOffices)
+
+// 小明订阅消息
+salesOffices.listen('squareMeter88', function(price) {
+  console.log('价格= ' + price)
+})
+
+// 小红订阅消息
+salesOffices.listen('squareMeter100', function(price) {
+  console.log('价格= ' + price)
+})
+
+salesOffices.trigger('squareMeter88', 2000000) // 输出：2000000
+salesOffices.trigger('squareMeter100', 3000000) // 输出：3000000
+
+</code></pre></div><h2 id="命令模式"><a href="#命令模式" aria-hidden="true" class="header-anchor">#</a> 命令模式</h2> <p>命令模式中的命令（command）指的是一个执行某些特定事情的指令。</p> <h3 id="常用场景-6"><a href="#常用场景-6" aria-hidden="true" class="header-anchor">#</a> 常用场景</h3> <ul><li>解耦发送者和接收者间的耦合关系</li> <li>更多...</li></ul> <h3 id="👉-解决方案-5"><a href="#👉-解决方案-5" aria-hidden="true" class="header-anchor">#</a> 👉 解决方案</h3> <div class="language- extra-class"><pre class="language-text"><code>var MenuBar = {
+  refresh: function() {
+    console.log('刷新菜单界面')
+  }
+}
+
+var RefreshMenuBarCommand = function(receiver) {
+  return {
+    execute: function() {
+      receiver.refresh()
+    }
+  }
+}
+
+var setCommand = function(button, command) {
+  button.onclick = function() {
+    command.execute()
+  }
+}
+
+var refreshMenuBarCommand = RefreshMenuBarCommand(MenuBar)
+setCommand(button1, refreshMenuBarCommand)
+
+</code></pre></div><h2 id="组合模式"><a href="#组合模式" aria-hidden="true" class="header-anchor">#</a> 组合模式</h2> <p>组合模式将对象组合成树形结构，以表示“部分-整体”的层次结构，其次可通过对象的多态性表现，使得用户对单个对象和组合对象的使用具有一致性。</p> <h3 id="常用场景-7"><a href="#常用场景-7" aria-hidden="true" class="header-anchor">#</a> 常用场景</h3> <ul><li>文件系统管理</li> <li>更多...</li></ul> <h3 id="👉-解决方案-6"><a href="#👉-解决方案-6" aria-hidden="true" class="header-anchor">#</a> 👉 解决方案</h3> <div class="language- extra-class"><pre class="language-text"><code>/********** Folder **********/
+var Folder = function(name) {
+  this.name = name;
+  this.files = []
+}
+
+Folder.prototype.add = function(file) {
+  this.files.push(file)
+}
+
+Folder.prototype.scan = function(){     
+  console.log( '开始扫描文件夹: ' + this.name );     
+  for ( var i = 0, file, files = this.files; file = files[ i++ ]; ){
+    file.scan()
+  }
+}
+
+/********** File **********/
+var File = function(name) {
+  this.name = name
+}
+
+File.prototype.add = function() {
+  throw new Error('文件下面不能再添加文件')
+}
+
+File.prototype.scan = function() {
+  console.log('开始扫码文件: ',  this.name)
+}
+</code></pre></div><h2 id="模板方法模式"><a href="#模板方法模式" aria-hidden="true" class="header-anchor">#</a> 模板方法模式</h2> <p>通过定义一个基方法，并定义一些步骤让子类来实现</p> <h3 id="常用场景-8"><a href="#常用场景-8" aria-hidden="true" class="header-anchor">#</a> 常用场景</h3> <ul><li>项目框架搭建</li> <li>更多...</li></ul> <h3 id="👉-解决方案-7"><a href="#👉-解决方案-7" aria-hidden="true" class="header-anchor">#</a> 👉 解决方案</h3> <div class="language- extra-class"><pre class="language-text"><code>function Base() {}
+Base.prototype.do1= function() {}
+
+// ...省略其他方法
+Base.prototype.init = function() {
+
+  // 设置执行顺序
+  this.do1()
+  
+  // ...
+}
+
+Var S1 = function() {}
+S1.prototype = new Base()
+S1.prototype.do1 = function() {} // 重写父类方法
+
+// ...省略其他方法
+
+var s1 = new S1()
+s1.init()
+</code></pre></div><h2 id="享元模式"><a href="#享元模式" aria-hidden="true" class="header-anchor">#</a> 享元模式</h2> <p>把所有内部状态相同的对象指定为同一个对象，而外部对象可以从对象上剥离下来，储存在外部</p> <h3 id="常用场景-9"><a href="#常用场景-9" aria-hidden="true" class="header-anchor">#</a> 常用场景</h3> <ul><li>多文件上传</li> <li>对象池</li> <li>更多...</li></ul> <h3 id="👉-解决方案-8"><a href="#👉-解决方案-8" aria-hidden="true" class="header-anchor">#</a> 👉 解决方案</h3> <div class="language- extra-class"><pre class="language-text"><code>// 设置享元对象
+var Upload = function(uploadType) {
+  this.uploadType = uploadType
+}
+
+Upload.prototype.delFile = function( id ){     
+  uploadManager.setExternalState( id, this );  // (1)    
+  if ( this.fileSize &lt; 3000 ){         
+    return this.dom.parentNode.removeChild( this.dom );    
+  }     
+  if ( window.confirm( '确定要删除该文件吗? ' + this.fileName ) ){         
+    return this.dom.parentNode.removeChild( this.dom );     
+  } 
+};
+
+var uploadManager = (function() {
+  var uploadDatabase = {}
+
+  return {
+    add: function(id, uploadType, fileName, fileSize) {
+      var flyWeightObj = UploadFactory.create(uploadType)
+      var dom = document.createElement('div')
+      dom.innerHTML =
+        '&lt;span&gt;文件名称:' +
+        fileName +
+        ', 文件大小: ' +
+        fileSize +
+        '&lt;/span&gt;' +
+        '&lt;button class=&quot;delFile&quot;&gt;删除&lt;/button&gt;'
+      dom.querySelector('.delFile').onclick = function() {
+        flyWeightObj.delFile(id)
+      }
+      document.body.appendChild(dom)
+      uploadDatabase[id] = { fileName: fileName, fileSize: fileSize, dom: dom }
+      return flyWeightObj
+    },
+    setExternalState: function(id, flyWeightObj) {
+      var uploadData = uploadDatabase[id]
+      for (var i in uploadData) {
+        flyWeightObj[i] = uploadData[i]
+      }
+    }
+  }
+})()
+
+var id = 0
+window.startUpload = function(uploadType, files) {
+  for (var i = 0, file; (file = files[i++]); ) {
+    var uploadObj = uploadManager.add(
+      ++id,
+      uploadType,
+      file.fileName,
+      file.fileSize
+    )
+  }
+}
+
+</code></pre></div><h2 id="职责链模式"><a href="#职责链模式" aria-hidden="true" class="header-anchor">#</a> 职责链模式</h2> <p>职责链模式的定义是：使多个对象都有机会处理请求，从而避免请求的发送者和接收者之间的耦合关系，将这些对象连成一条链，并沿着这条链传递该请求，直到有一个对象处理它为止。</p> <h3 id="常用场景-10"><a href="#常用场景-10" aria-hidden="true" class="header-anchor">#</a> 常用场景</h3> <ul><li>商城抽奖系统</li> <li>更多...</li></ul> <h3 id="👉-解决方案-9"><a href="#👉-解决方案-9" aria-hidden="true" class="header-anchor">#</a> 👉 解决方案</h3> <div class="language- extra-class"><pre class="language-text"><code>var order500 = function(orderType, pay, stock) {
+  if(orderType === 1 &amp;&amp; pay === true) {
+    console.log('500元定金预购，获得100元优惠券')
+  }else {
+    return 'nextSuccessor'
+  }
+}
+
+var order200 = function(orderType, pay, stock) {
+  if(orderType === 2 &amp;&amp; pay === true) {
+    console.log('200元定金预购，获得50元优惠券')
+  }else {
+    return 'nextSuccessor'
+  }
+}
+
+var orderNormal = function(orderType, pay, stock) {
+  if(stock &gt; 0) {
+    console.log('普通购买，无优惠券')
+  }else {
+    console.log('库存不足')
+  }
+}
+
+var Chain = function(fn) {
+  this.fn = fn
+  this.successor = null
+}
+Chain.prototype.setNextSuccessor = function( successor ){     
+  return this.successor = successor; 
+}; 
+Chain.prototype.passRequest = function(){     
+  var ret = this.fn.apply( this, arguments );     
+  if ( ret === 'nextSuccessor' ){         
+    return this.successor &amp;&amp; this.successor.passRequest.apply( this.successor, arguments );     
+  }     
+  return ret; 
+};
+</code></pre></div><h2 id="中介者模式"><a href="#中介者模式" aria-hidden="true" class="header-anchor">#</a> 中介者模式</h2> <p>解除对象和对象之间的耦合关系，增加一个中介者对象，所有的相关对象都可以通过中介者对象来通信.</p> <h3 id="常用场景-11"><a href="#常用场景-11" aria-hidden="true" class="header-anchor">#</a> 常用场景</h3> <ul><li>博彩系统</li> <li>Vuex 状态树</li> <li>更多...</li></ul> <h3 id="👉-解决方案-10"><a href="#👉-解决方案-10" aria-hidden="true" class="header-anchor">#</a> 👉 解决方案</h3> <div class="language- extra-class"><pre class="language-text"><code>var goods = {
+  // 手机库存
+  'red|32G': 3,
+  'red|16G': 0,
+  'blue|32G': 1,
+  'blue|16G': 6
+}
+var mediator = (function() {
+  var colorSelect = document.getElementById('colorSelect'),
+    memorySelect = document.getElementById('memorySelect'),
+    numberInput = document.getElementById('numberInput'),
+    colorInfo = document.getElementById('colorInfo'),
+    memoryInfo = document.getElementById('memoryInfo'),
+    numberInfo = document.getElementById('numberInfo'),
+    nextBtn = document.getElementById('nextBtn')
+  return {
+    changed: function(obj) {
+      var color = colorSelect.value, // 颜色
+        memory = memorySelect.value, // 内存
+        number = numberInput.value, // 数量
+        stock = goods[color + '|' + memory] // 颜色和内存对应的手机库存数量
+      if (obj === colorSelect) {
+        // 如果改变的是选择颜色下拉框
+        colorInfo.innerHTML = color
+      } else if (obj === memorySelect) {
+        memoryInfo.innerHTML = memory
+      } else if (obj === numberInput) {
+        numberInfo.innerHTML = number
+      }
+      if (!color) {
+        nextBtn.disabled = true
+        nextBtn.innerHTML = '请选择手机颜色'
+        return
+      }
+      if (!memory) {
+        nextBtn.disabled = true
+        nextBtn.innerHTML = '请选择内存大小'
+        return
+      }
+      if (((number - 0) | 0) !== number - 0) {
+        // 输入购买数量是否为正整数
+        nextBtn.disabled = true
+
+        nextBtn.innerHTML = '请输入正确的购买数量'
+        return
+      }
+      nextBtn.disabled = false
+      nextBtn.innerHTML = '放入购物车'
+    }
+  }
+})()
+// 事件函数：
+colorSelect.onchange = function() {
+  mediator.changed(this)
+}
+memorySelect.onchange = function() {
+  mediator.changed(this)
+}
+numberInput.oninput = function() {
+  mediator.changed(this)
+}
+
+</code></pre></div><h3 id="note"><a href="#note" aria-hidden="true" class="header-anchor">#</a> Note</h3> <blockquote><p>中介者模式与发布-订阅模式是存在区别的。<br> <code>中介者模式</code>: 对象间互相通信，但通过中间对象来通信<br> <code>发布-订阅模式</code>: 对象间不通信，中间对象对普通对象发送信息。</p></blockquote> <h2 id="装饰者模式"><a href="#装饰者模式" aria-hidden="true" class="header-anchor">#</a> 装饰者模式</h2> <p>不改变对象自身的基础上，在程序运行期间给对象动态的添加职能</p> <h3 id="常用场景-12"><a href="#常用场景-12" aria-hidden="true" class="header-anchor">#</a> 常用场景</h3> <ul><li>修饰器（Decorator）</li> <li>更多...</li></ul> <h3 id="👉-解决方案-11"><a href="#👉-解决方案-11" aria-hidden="true" class="header-anchor">#</a> 👉 解决方案</h3> <div class="language- extra-class"><pre class="language-text"><code>Function.prototype.before = function(beforefn) {
+  var __self = this // 保存原函数的引用
+  return function() {
+    // 返回包含了原函数和新函数的&quot;代理&quot;函数
+    beforefn.apply(this, arguments) // 执行新函数，且保证this不被劫持，新函数接受的参数 // 也会被原封不动地传入原函数，新函数在原函数之前执行
+    return __self.apply(this, arguments) // 执行原函数并返回原函数的执行结果， // 并且保证this不被劫持
+  }
+}
+
+Function.prototype.after = function(afterfn) {
+  var __self = this
+  return function() {
+    var ret = __self.apply(this, arguments)
+    afterfn.apply(this, arguments)
+    return ret
+  }
+}
+</code></pre></div><h2 id="状态模式"><a href="#状态模式" aria-hidden="true" class="header-anchor">#</a> 状态模式</h2> <p>状态模式的关键是区分事物内部的状态，事物内部状态的改变往往会带来事物的行为改变。</p> <h3 id="常用场景-13"><a href="#常用场景-13" aria-hidden="true" class="header-anchor">#</a> 常用场景</h3> <ul><li>文件上传</li> <li>Promise中的状态<code>Fulfilled</code>, <code>Rejected</code>, <code>Pending</code></li> <li>更多...</li></ul> <h3 id="👉-解决方案-12"><a href="#👉-解决方案-12" aria-hidden="true" class="header-anchor">#</a> 👉 解决方案</h3> <div class="language- extra-class"><pre class="language-text"><code>var Light = function() {
+  this.offLightState = new OffLightState(this) // 持有状态对象的引用
+  this.weakLightState = new WeakLightState(this)
+  this.strongLightState = new StrongLightState(this)
+  this.superStrongLightState = new SuperStrongLightState(this)
+  this.button = null
+}
+
+Light.prototype.init = function() {
+  var button = document.createElement('button'),
+    self = this
+  this.button = document.body.appendChild(button)
+  this.button.innerHTML = '开关'
+  this.currState = this.offLightState // 设置默认初始状态
+  this.button.onclick = function() {
+    // 定义用户的请求动作
+    self.currState.buttonWasPressed()
+  }
+}
+</code></pre></div><h2 id="适配器模式"><a href="#适配器模式" aria-hidden="true" class="header-anchor">#</a> 适配器模式</h2> <p>适配器模式的作用是解决两个软件实体间的接口不兼容的问题。使用适配器模式之后，原本由于接口不兼容而不能工作的两个软件实体可以一起工作。</p> <h3 id="常用场景-14"><a href="#常用场景-14" aria-hidden="true" class="header-anchor">#</a> 常用场景</h3> <ul><li>XML-JSON适配器</li> <li>多地图兼容</li> <li>更多...</li></ul> <h3 id="👉-解决方案-13"><a href="#👉-解决方案-13" aria-hidden="true" class="header-anchor">#</a> 👉 解决方案</h3> <div class="language- extra-class"><pre class="language-text"><code>var googleMap = {
+  show: function() {
+    console.log('开始渲染谷歌地图')
+  }
+}
+var baiduMap = {
+  display: function() {
+    console.log('开始渲染百度地图')
+  }
+}
+var baiduMapAdapter = {
+  show: function() {
+    return baiduMap.display()
+  }
+}
+renderMap(googleMap) // 输出：开始渲染谷歌地图
+renderMap(baiduMapAdapter) // 输出：开始渲染百度地图
+</code></pre></div><div id="vcomments"></div></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">上次更新: </span> <span class="time">2019-9-9 11:43:03</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/frontEnd/algorithm/one-algorithm.html" class="prev">
+          渣渣的算法题之路
+        </a></span> <span class="next"><a href="/frontEnd/sourceCode/Start-Know-Vue.html">
+          vue源码的感悟
+        </a>
+        →
+      </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.8dae8355.js" defer></script><script src="/assets/js/2.dc92909d.js" defer></script><script src="/assets/js/15.17160c19.js" defer></script><script src="/assets/js/6.a180e42e.js" defer></script>
+  </body>
+</html>

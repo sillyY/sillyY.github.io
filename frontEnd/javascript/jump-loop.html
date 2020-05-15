@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>跳出循环的三种方法(break-return-continue) | sillyY</title>
+    <meta name="description" content="Just playing around">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    
+    <link rel="preload" href="/assets/css/0.styles.28ef1fef.css" as="style"><link rel="preload" href="/assets/js/app.8dae8355.js" as="script"><link rel="preload" href="/assets/js/2.dc92909d.js" as="script"><link rel="preload" href="/assets/js/17.4ace0302.js" as="script"><link rel="prefetch" href="/assets/js/10.e98d4025.js"><link rel="prefetch" href="/assets/js/11.5587c763.js"><link rel="prefetch" href="/assets/js/12.2d3c60f5.js"><link rel="prefetch" href="/assets/js/13.eaa7ea73.js"><link rel="prefetch" href="/assets/js/14.f6fe8d5b.js"><link rel="prefetch" href="/assets/js/15.17160c19.js"><link rel="prefetch" href="/assets/js/16.612f97fd.js"><link rel="prefetch" href="/assets/js/18.6e13a193.js"><link rel="prefetch" href="/assets/js/19.c2c41b36.js"><link rel="prefetch" href="/assets/js/20.86ab84d4.js"><link rel="prefetch" href="/assets/js/21.51b2926e.js"><link rel="prefetch" href="/assets/js/22.68ae5fa7.js"><link rel="prefetch" href="/assets/js/23.46ee807b.js"><link rel="prefetch" href="/assets/js/24.ba851b1c.js"><link rel="prefetch" href="/assets/js/25.04343082.js"><link rel="prefetch" href="/assets/js/26.c3095e35.js"><link rel="prefetch" href="/assets/js/27.a40569d3.js"><link rel="prefetch" href="/assets/js/28.8f598cb4.js"><link rel="prefetch" href="/assets/js/29.715a5b6b.js"><link rel="prefetch" href="/assets/js/3.4df34556.js"><link rel="prefetch" href="/assets/js/30.fe812dba.js"><link rel="prefetch" href="/assets/js/31.f1550050.js"><link rel="prefetch" href="/assets/js/32.8c90a456.js"><link rel="prefetch" href="/assets/js/33.9515fed6.js"><link rel="prefetch" href="/assets/js/34.103c5784.js"><link rel="prefetch" href="/assets/js/35.ed96bf70.js"><link rel="prefetch" href="/assets/js/36.03c7586b.js"><link rel="prefetch" href="/assets/js/37.1f6cd2c2.js"><link rel="prefetch" href="/assets/js/38.dbf816f4.js"><link rel="prefetch" href="/assets/js/39.4387a0c9.js"><link rel="prefetch" href="/assets/js/4.8ca31cab.js"><link rel="prefetch" href="/assets/js/40.2830a92f.js"><link rel="prefetch" href="/assets/js/41.66cdba68.js"><link rel="prefetch" href="/assets/js/42.d3e87825.js"><link rel="prefetch" href="/assets/js/5.ed1cff9d.js"><link rel="prefetch" href="/assets/js/6.a180e42e.js"><link rel="prefetch" href="/assets/js/7.101c3ea0.js"><link rel="prefetch" href="/assets/js/8.38b06e0d.js"><link rel="prefetch" href="/assets/js/9.5d56b8fe.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.28ef1fef.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">sillyY</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title">🌟博客</span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/frontEnd/" class="nav-link router-link-active">前端</a></li><li class="dropdown-item"><!----> <a href="/backEnd/" class="nav-link">后端</a></li><li class="dropdown-item"><!----> <a href="/tools/" class="nav-link">工具</a></li></ul></div></div><div class="nav-item"><a href="/learn/" class="nav-link">📚学习</a></div><div class="nav-item"><a href="/todo/" class="nav-link">💡Todo</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title">💻项目</span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="http://sillyy.cn/TemplateCLI-Extension/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Template
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://sillyy.cn/ele-vue/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  ele-vue
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://sillyy.cn/diff-dir-file/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  diff-dir-file
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://sillyy.cn/vuepress-plugin-code-segment/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  vuepress-plugin-code-segment
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul></div></div><div class="nav-item"><a href="https://github.com/sillyY" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title">🌟博客</span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/frontEnd/" class="nav-link router-link-active">前端</a></li><li class="dropdown-item"><!----> <a href="/backEnd/" class="nav-link">后端</a></li><li class="dropdown-item"><!----> <a href="/tools/" class="nav-link">工具</a></li></ul></div></div><div class="nav-item"><a href="/learn/" class="nav-link">📚学习</a></div><div class="nav-item"><a href="/todo/" class="nav-link">💡Todo</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title">💻项目</span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="http://sillyy.cn/TemplateCLI-Extension/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Template
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://sillyy.cn/ele-vue/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  ele-vue
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://sillyy.cn/diff-dir-file/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  diff-dir-file
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://sillyy.cn/vuepress-plugin-code-segment/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  vuepress-plugin-code-segment
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul></div></div><div class="nav-item"><a href="https://github.com/sillyY" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/frontEnd/" class="sidebar-link">欢迎</a></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>HTML</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>CSS</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>JavaScript</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/frontEnd/javascript/map-parseInt.html" class="sidebar-link">map-parseInt的认识与了解</a></li><li><a href="/frontEnd/javascript/call-apply-bind.html" class="sidebar-link">手写call-apply-bind</a></li><li><a href="/frontEnd/javascript/unpopular-statements.html" class="sidebar-link">JS冷门语句</a></li><li><a href="/frontEnd/javascript/jump-loop.html" class="active sidebar-link">跳出循环的三种方法(break-return-continue)</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/frontEnd/javascript/jump-loop.html#break-return-continue" class="sidebar-link">break-return-continue</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/frontEnd/javascript/jump-loop.html#_1-break" class="sidebar-link">1.break</a></li><li class="sidebar-sub-header"><a href="/frontEnd/javascript/jump-loop.html#_2-return" class="sidebar-link">2.return</a></li><li class="sidebar-sub-header"><a href="/frontEnd/javascript/jump-loop.html#_3-continue" class="sidebar-link">3.continue</a></li></ul></li><li class="sidebar-sub-header"><a href="/frontEnd/javascript/jump-loop.html#_1-for" class="sidebar-link">1. for</a></li><li class="sidebar-sub-header"><a href="/frontEnd/javascript/jump-loop.html#_2-while" class="sidebar-link">2. while</a></li><li class="sidebar-sub-header"><a href="/frontEnd/javascript/jump-loop.html#_3-do-while-循环" class="sidebar-link">3. do-while 循环</a></li><li class="sidebar-sub-header"><a href="/frontEnd/javascript/jump-loop.html#_4-for-in" class="sidebar-link">4. for-in</a></li><li class="sidebar-sub-header"><a href="/frontEnd/javascript/jump-loop.html#_5-for-of" class="sidebar-link">5. for-of</a></li><li class="sidebar-sub-header"><a href="/frontEnd/javascript/jump-loop.html#_6-map" class="sidebar-link">6.map</a></li><li class="sidebar-sub-header"><a href="/frontEnd/javascript/jump-loop.html#_7-foreach" class="sidebar-link">7.forEach</a></li><li class="sidebar-sub-header"><a href="/frontEnd/javascript/jump-loop.html#_8-every" class="sidebar-link">8.every</a></li><li class="sidebar-sub-header"><a href="/frontEnd/javascript/jump-loop.html#_9-some" class="sidebar-link">9.some</a></li><li class="sidebar-sub-header"><a href="/frontEnd/javascript/jump-loop.html#_10-filter" class="sidebar-link">10.filter</a></li><li class="sidebar-sub-header"><a href="/frontEnd/javascript/jump-loop.html#_11-reduce" class="sidebar-link">11. reduce</a></li></ul></li><li><a href="/frontEnd/javascript/promise.html" class="sidebar-link">手写Promise</a></li><li><a href="/frontEnd/javascript/promise-analyze.html" class="sidebar-link">手写Promise解析</a></li><li><a href="/frontEnd/javascript/svelte-counter.html" class="sidebar-link">svelte尝鲜之计数器</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Node</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>React</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Vue</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>小程序</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>杂类</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>网络协议</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Git</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>函数式编程</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>算法</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>设计模式</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>源码阅读</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="跳出循环的三种方法-break-return-continue"><a href="#跳出循环的三种方法-break-return-continue" aria-hidden="true" class="header-anchor">#</a> 跳出循环的三种方法(break-return-continue)</h1> <h2 id="break-return-continue"><a href="#break-return-continue" aria-hidden="true" class="header-anchor">#</a> break-return-continue</h2> <h3 id="_1-break"><a href="#_1-break" aria-hidden="true" class="header-anchor">#</a> 1.break</h3> <div class="tip custom-block"><p>MDN: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/break" target="_blank" rel="noopener noreferrer">break<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p></div> <ul><li>定义<br>
+break 语句中止当前循环，switch 语句或 label 语句，并把程序控制流转到紧接着被中止语句后面的语句。</li> <li>语法<div class="danger custom-block"><p>break [label];</p></div> <strong>label</strong><br>
+ 可选。与语句标签相关联的标识符。如果 break 语句不在一个循环或 switch 语句中，则该项是必须的。</li></ul> <h3 id="_2-return"><a href="#_2-return" aria-hidden="true" class="header-anchor">#</a> 2.return</h3> <div class="tip custom-block"><p>MDN: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/return" target="_blank" rel="noopener noreferrer">return<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p></div> <ul><li>定义<br>
+return 语句终止函数的执行，并返回一个指定的值给函数调用者。</li> <li>语法<div class="danger custom-block"><p>return [[expression]];</p></div>
+expression
+ 表达式的值会被返回。如果忽略，则返回 undefined。</li></ul> <h3 id="_3-continue"><a href="#_3-continue" aria-hidden="true" class="header-anchor">#</a> 3.continue</h3> <div class="tip custom-block"><p>MDN: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/continue" target="_blank" rel="noopener noreferrer">continue<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p></div> <ul><li>定义<br>
+continue 语句结束当前（或标签）的循环语句的本次迭代，并继续执行循环的下一次迭代。</li> <li>语法<div class="danger custom-block"><p>continue [ label];</p></div></li></ul> <p>label
+ 标识标号关联的语句</p> <h2 id="_1-for"><a href="#_1-for" aria-hidden="true" class="header-anchor">#</a> 1. for</h2> <div class="language- extra-class"><pre class="language-text"><code>function execute() {
+  var arr = [1, 2, 3],
+    i = 0,
+    len = arr.length
+
+  for (; i &lt; len; i++) {
+    // if (i === 1) [statement]
+    console.log(`key: ${i} \nvalue: ${arr[i]}`)
+  }
+  console.log('execute')
+}
+
+var result = execute()
+console.log(result)
+
+</code></pre></div><table><thead><tr><th>statement</th> <th>结果</th> <th>说明</th></tr></thead> <tbody><tr><td>break</td> <td><strong>key: 0 <br> value: 1<br>execute<br>undefined</strong></td> <td>跳出循环</td></tr> <tr><td>continue</td> <td><strong>key: 0 <br> value: 1<br>key: 2<br>value: 3<br>execute<br>undefined</strong></td> <td>跳出当前执行，执行下次循环</td></tr> <tr><td>return</td> <td><strong>key: 0 <br>value: 1 <br>undefined</strong></td> <td>跳出函数</td></tr></tbody></table> <h2 id="_2-while"><a href="#_2-while" aria-hidden="true" class="header-anchor">#</a> 2. while</h2> <div class="language- extra-class"><pre class="language-text"><code>function execute() {
+  var num = 0
+
+  while (num &lt;= 3) {
+    num++
+    // if (num === 1) [statement];
+    console.log(num)
+  }
+  console.log('execute')
+}
+var result = execute()
+console.log(result)
+</code></pre></div><table><thead><tr><th>statement</th> <th>结果</th> <th>说明</th></tr></thead> <tbody><tr><td>break</td> <td><strong>execute<br>undefined</strong></td> <td>跳出循环</td></tr> <tr><td>continue</td> <td><strong>2<br>3<br>4<br>execute<br>undefined</strong></td> <td>跳出当前执行，执行下次循环</td></tr> <tr><td>return</td> <td><strong>undefined</strong></td> <td>跳出函数</td></tr></tbody></table> <h2 id="_3-do-while-循环"><a href="#_3-do-while-循环" aria-hidden="true" class="header-anchor">#</a> 3. do-while 循环</h2> <div class="language- extra-class"><pre class="language-text"><code>function execute() {
+  var num = 3
+  do {
+    num--
+    if (num === 1) break;
+    console.log(num)
+  } while (num &gt;= 0)
+
+  console.log('execute')
+}
+var result = execute()
+console.log(result)
+</code></pre></div><table><thead><tr><th>statement</th> <th>结果</th> <th>说明</th></tr></thead> <tbody><tr><td>break</td> <td><strong>2<br>execute<br>undefined</strong></td> <td>跳出循环</td></tr> <tr><td>continue</td> <td><strong>2<br>0<br>-1<br>execute<br>undefined</strong></td> <td>跳出当前执行，执行下次循环</td></tr> <tr><td>return</td> <td><strong>2<br>undefined</strong></td> <td>跳出函数</td></tr></tbody></table> <h2 id="_4-for-in"><a href="#_4-for-in" aria-hidden="true" class="header-anchor">#</a> 4. for-in</h2> <div class="language- extra-class"><pre class="language-text"><code>function execute() {
+  var obj = {a: 1, b:2, c: 3}
+
+  for(let key in obj) {
+    // if(obj[key] === 1) [statement]
+    console.log(obj[key])
+  }
+  console.log('execute')
+}
+var result = execute()
+console.log(result)
+</code></pre></div><table><thead><tr><th>statement</th> <th>结果</th> <th>说明</th></tr></thead> <tbody><tr><td>break</td> <td><strong>execute<br>undefined</strong></td> <td>跳出循环</td></tr> <tr><td>continue</td> <td><strong>2<br>3<br>execute<br>undefined</strong></td> <td>跳出当前执行，执行下次循环</td></tr> <tr><td>return</td> <td><strong>undefined</strong></td> <td>跳出函数</td></tr></tbody></table> <h2 id="_5-for-of"><a href="#_5-for-of" aria-hidden="true" class="header-anchor">#</a> 5. for-of</h2> <div class="language- extra-class"><pre class="language-text"><code>function execute() {
+  var arr = [1, 2, 3]
+
+  for(let value in arr) {
+    // if(value === 1) [statement];
+    console.log(value)
+  }
+  console.log('execute')
+}
+var result = execute()
+console.log(result)
+</code></pre></div><table><thead><tr><th>statement</th> <th>结果</th> <th>说明</th></tr></thead> <tbody><tr><td>break</td> <td><strong>execute<br>undefined</strong></td> <td>跳出循环</td></tr> <tr><td>continue</td> <td><strong>2<br>3<br>execute<br>undefined</strong></td> <td>跳出当前执行，执行下次循环</td></tr> <tr><td>return</td> <td><strong>undefined</strong></td> <td>跳出函数</td></tr></tbody></table> <h2 id="_6-map"><a href="#_6-map" aria-hidden="true" class="header-anchor">#</a> 6.map</h2> <div class="language- extra-class"><pre class="language-text"><code>function execute() {
+  var arr = [1, 2, 3]
+
+  var result  = arr.map(v=&gt; {
+    // if(v === 1) [statement];
+    console.log(v)
+  })
+  console.log(result);
+  console.log('execute')
+}
+var result = execute()
+console.log(result)
+</code></pre></div><table><thead><tr><th>statement</th> <th>结果</th> <th>说明</th></tr></thead> <tbody><tr><td>break</td> <td>SyntaxError: Illegal break statement</td> <td>map 中不允许使用 break</td></tr> <tr><td>continue</td> <td>Illegal continue statement: no surrounding iteration statement</td> <td>map 中不允许使用 continue</td></tr> <tr><td>return 'result'</td> <td><strong>2<br>3<br>['result', undefined, undefined]<br>execute<br>undefined</strong></td> <td>保持 map 的返回值，执行下次循环</td></tr></tbody></table> <h2 id="_7-foreach"><a href="#_7-foreach" aria-hidden="true" class="header-anchor">#</a> 7.forEach</h2> <div class="language- extra-class"><pre class="language-text"><code>function execute() {
+  var arr = [1, 2, 3]
+
+  var result  = arr.forEach(v=&gt; {
+    // if(v === 1) [statement];
+    console.log(v)
+  })
+  console.log(result);
+  console.log('execute')
+}
+var result = execute()
+console.log(result)
+</code></pre></div><table><thead><tr><th>statement</th> <th>结果</th> <th>说明</th></tr></thead> <tbody><tr><td>break</td> <td>SyntaxError: Illegal break statement</td> <td>forEach 中不允许使用 break</td></tr> <tr><td>continue</td> <td>Illegal continue statement: no surrounding iteration statement</td> <td>forEach 中不允许使用 continue</td></tr> <tr><td>return 'result'</td> <td><strong>2<br>3<br>undefined<br>execute<br>undefined</strong></td> <td>forEach 本身无返回值，这里无效果，执行下次循环</td></tr></tbody></table> <h2 id="_8-every"><a href="#_8-every" aria-hidden="true" class="header-anchor">#</a> 8.every</h2> <div class="language- extra-class"><pre class="language-text"><code>function execute() {
+  var arr = [1, 2, 3]
+
+  var result  = arr.every(v=&gt; {
+    if(v === 1) [statement];
+    console.log(v)
+  })
+  console.log(result);
+  console.log('execute')
+}
+var result = execute()
+console.log(result)
+</code></pre></div><table><thead><tr><th>statement</th> <th>结果</th> <th>说明</th></tr></thead> <tbody><tr><td>break</td> <td>SyntaxError: Illegal break statement</td> <td>every 中不允许使用 break</td></tr> <tr><td>continue</td> <td>Illegal continue statement: no surrounding iteration statement</td> <td>every 中不允许使用 continue</td></tr> <tr><td>return 'result'</td> <td><strong>2<br>false<br>execute<br>undefined</strong></td> <td>every 数据中存在不满足 v === 1 的数据，则返回 false, return 后执行下次循环</td></tr></tbody></table> <h2 id="_9-some"><a href="#_9-some" aria-hidden="true" class="header-anchor">#</a> 9.some</h2> <div class="language- extra-class"><pre class="language-text"><code>function execute() {
+  var arr = [1, 2, 3]
+
+  var result  = arr.some(v=&gt; {
+    if(v === 1) [statement];
+    console.log(v)
+  })
+  console.log(result);
+  console.log('execute')
+}
+var result = execute()
+console.log(result)
+</code></pre></div><table><thead><tr><th>statement</th> <th>结果</th> <th>说明</th></tr></thead> <tbody><tr><td>break</td> <td>SyntaxError: Illegal break statement</td> <td>some 中不允许使用 break</td></tr> <tr><td>continue</td> <td>Illegal continue statement: no surrounding iteration statement</td> <td>some 中不允许使用 continue</td></tr> <tr><td>return 'result'</td> <td><strong>true<br>execute<br>undefined</strong></td> <td>some 数据中只要存在满足 v === 1 的数据，则返回 true, 这里 return 后跳出循环</td></tr></tbody></table> <h2 id="_10-filter"><a href="#_10-filter" aria-hidden="true" class="header-anchor">#</a> 10.filter</h2> <div class="language- extra-class"><pre class="language-text"><code>function execute() {
+  var arr = [1, 2, 3]
+
+  var result  = arr.filter(v=&gt; {
+    if(v === 1) [statement];
+    console.log(v)
+  })
+  console.log(result);
+  console.log('execute')
+}
+var result = execute()
+console.log(result)
+</code></pre></div><table><thead><tr><th>statement</th> <th>结果</th> <th>说明</th></tr></thead> <tbody><tr><td>break</td> <td>SyntaxError: Illegal break statement</td> <td>filter 中不允许使用 break</td></tr> <tr><td>continue</td> <td>Illegal continue statement: no surrounding iteration statement</td> <td>filter 中不允许使用 continue</td></tr> <tr><td>return 'result'</td> <td><strong>2<br>3<br>[1]<br>execute<br>undefined</strong></td> <td>filter 筛选满足条件的数据， 这里 return 后跳出当前执行，执行下次循环</td></tr></tbody></table> <h2 id="_11-reduce"><a href="#_11-reduce" aria-hidden="true" class="header-anchor">#</a> 11. reduce</h2> <div class="language- extra-class"><pre class="language-text"><code>function execute() {
+  var arr = [1, 2, 3]
+
+  var result  = arr.reduce((prev, cur)=&gt; {
+    if(prev === 1) return 'result';
+    console.log(prev, cur)
+  })
+  console.log(result);
+  console.log('execute')
+}
+var result = execute()
+console.log(result)
+</code></pre></div><table><thead><tr><th>statement</th> <th>结果</th> <th>说明</th></tr></thead> <tbody><tr><td>break</td> <td>SyntaxError: Illegal break statement</td> <td>reduce 中不允许使用 break</td></tr> <tr><td>continue</td> <td>Illegal continue statement: no surrounding iteration statement</td> <td>reduce 中不允许使用 continue</td></tr> <tr><td>return 'result'</td> <td><strong>result 3<br>undefined<br>execute<br>undefined</strong></td> <td>reduce prev 代表前一个返回值， 这里 return 后跳出当前执行， 执行下次循环</td></tr></tbody></table></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">上次更新: </span> <span class="time">2019-11-8 17:04:53</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/frontEnd/javascript/unpopular-statements.html" class="prev">
+          JS冷门语句
+        </a></span> <span class="next"><a href="/frontEnd/javascript/promise.html">
+          手写Promise
+        </a>
+        →
+      </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.8dae8355.js" defer></script><script src="/assets/js/2.dc92909d.js" defer></script><script src="/assets/js/17.4ace0302.js" defer></script>
+  </body>
+</html>

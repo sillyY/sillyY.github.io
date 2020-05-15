@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>手写 Promise | sillyY</title>
+    <meta name="description" content="Just playing around">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+    
+    <link rel="preload" href="/assets/css/0.styles.28ef1fef.css" as="style"><link rel="preload" href="/assets/js/app.8dae8355.js" as="script"><link rel="preload" href="/assets/js/2.dc92909d.js" as="script"><link rel="preload" href="/assets/js/20.86ab84d4.js" as="script"><link rel="preload" href="/assets/js/6.a180e42e.js" as="script"><link rel="prefetch" href="/assets/js/10.e98d4025.js"><link rel="prefetch" href="/assets/js/11.5587c763.js"><link rel="prefetch" href="/assets/js/12.2d3c60f5.js"><link rel="prefetch" href="/assets/js/13.eaa7ea73.js"><link rel="prefetch" href="/assets/js/14.f6fe8d5b.js"><link rel="prefetch" href="/assets/js/15.17160c19.js"><link rel="prefetch" href="/assets/js/16.612f97fd.js"><link rel="prefetch" href="/assets/js/17.4ace0302.js"><link rel="prefetch" href="/assets/js/18.6e13a193.js"><link rel="prefetch" href="/assets/js/19.c2c41b36.js"><link rel="prefetch" href="/assets/js/21.51b2926e.js"><link rel="prefetch" href="/assets/js/22.68ae5fa7.js"><link rel="prefetch" href="/assets/js/23.46ee807b.js"><link rel="prefetch" href="/assets/js/24.ba851b1c.js"><link rel="prefetch" href="/assets/js/25.04343082.js"><link rel="prefetch" href="/assets/js/26.c3095e35.js"><link rel="prefetch" href="/assets/js/27.a40569d3.js"><link rel="prefetch" href="/assets/js/28.8f598cb4.js"><link rel="prefetch" href="/assets/js/29.715a5b6b.js"><link rel="prefetch" href="/assets/js/3.4df34556.js"><link rel="prefetch" href="/assets/js/30.fe812dba.js"><link rel="prefetch" href="/assets/js/31.f1550050.js"><link rel="prefetch" href="/assets/js/32.8c90a456.js"><link rel="prefetch" href="/assets/js/33.9515fed6.js"><link rel="prefetch" href="/assets/js/34.103c5784.js"><link rel="prefetch" href="/assets/js/35.ed96bf70.js"><link rel="prefetch" href="/assets/js/36.03c7586b.js"><link rel="prefetch" href="/assets/js/37.1f6cd2c2.js"><link rel="prefetch" href="/assets/js/38.dbf816f4.js"><link rel="prefetch" href="/assets/js/39.4387a0c9.js"><link rel="prefetch" href="/assets/js/4.8ca31cab.js"><link rel="prefetch" href="/assets/js/40.2830a92f.js"><link rel="prefetch" href="/assets/js/41.66cdba68.js"><link rel="prefetch" href="/assets/js/42.d3e87825.js"><link rel="prefetch" href="/assets/js/5.ed1cff9d.js"><link rel="prefetch" href="/assets/js/7.101c3ea0.js"><link rel="prefetch" href="/assets/js/8.38b06e0d.js"><link rel="prefetch" href="/assets/js/9.5d56b8fe.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.28ef1fef.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">sillyY</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title">🌟博客</span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/frontEnd/" class="nav-link router-link-active">前端</a></li><li class="dropdown-item"><!----> <a href="/backEnd/" class="nav-link">后端</a></li><li class="dropdown-item"><!----> <a href="/tools/" class="nav-link">工具</a></li></ul></div></div><div class="nav-item"><a href="/learn/" class="nav-link">📚学习</a></div><div class="nav-item"><a href="/todo/" class="nav-link">💡Todo</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title">💻项目</span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="http://sillyy.cn/TemplateCLI-Extension/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Template
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://sillyy.cn/ele-vue/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  ele-vue
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://sillyy.cn/diff-dir-file/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  diff-dir-file
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://sillyy.cn/vuepress-plugin-code-segment/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  vuepress-plugin-code-segment
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul></div></div><div class="nav-item"><a href="https://github.com/sillyY" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">首页</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title">🌟博客</span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/frontEnd/" class="nav-link router-link-active">前端</a></li><li class="dropdown-item"><!----> <a href="/backEnd/" class="nav-link">后端</a></li><li class="dropdown-item"><!----> <a href="/tools/" class="nav-link">工具</a></li></ul></div></div><div class="nav-item"><a href="/learn/" class="nav-link">📚学习</a></div><div class="nav-item"><a href="/todo/" class="nav-link">💡Todo</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title">💻项目</span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="http://sillyy.cn/TemplateCLI-Extension/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Template
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://sillyy.cn/ele-vue/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  ele-vue
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://sillyy.cn/diff-dir-file/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  diff-dir-file
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li><li class="dropdown-item"><!----> <a href="http://sillyy.cn/vuepress-plugin-code-segment/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  vuepress-plugin-code-segment
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul></div></div><div class="nav-item"><a href="https://github.com/sillyY" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/frontEnd/" class="sidebar-link">欢迎</a></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>HTML</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>CSS</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>JavaScript</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/frontEnd/javascript/map-parseInt.html" class="sidebar-link">map-parseInt的认识与了解</a></li><li><a href="/frontEnd/javascript/call-apply-bind.html" class="sidebar-link">手写call-apply-bind</a></li><li><a href="/frontEnd/javascript/unpopular-statements.html" class="sidebar-link">JS冷门语句</a></li><li><a href="/frontEnd/javascript/jump-loop.html" class="sidebar-link">跳出循环的三种方法(break-return-continue)</a></li><li><a href="/frontEnd/javascript/promise.html" class="active sidebar-link">手写Promise</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/frontEnd/javascript/promise.html#promises-a-规范" class="sidebar-link">Promises/A+ 规范</a></li><li class="sidebar-sub-header"><a href="/frontEnd/javascript/promise.html#开发准备" class="sidebar-link">开发准备</a></li><li class="sidebar-sub-header"><a href="/frontEnd/javascript/promise.html#开发" class="sidebar-link">开发</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/frontEnd/javascript/promise.html#声明状态常量并创建一个简易的-promise-类" class="sidebar-link">声明状态常量并创建一个简易的 Promise 类</a></li><li class="sidebar-sub-header"><a href="/frontEnd/javascript/promise.html#开发-then-方法，then-方法参数为-onfulfilled-和-onrejected-2-个函数" class="sidebar-link">开发 then 方法，then 方法参数为 onFulfilled 和 onRejected 2 个函数</a></li><li class="sidebar-sub-header"><a href="/frontEnd/javascript/promise.html#补充-promise-其他方法" class="sidebar-link">补充 Promise 其他方法</a></li></ul></li><li class="sidebar-sub-header"><a href="/frontEnd/javascript/promise.html#测试" class="sidebar-link">测试</a></li><li class="sidebar-sub-header"><a href="/frontEnd/javascript/promise.html#参考文献" class="sidebar-link">参考文献</a></li></ul></li><li><a href="/frontEnd/javascript/promise-analyze.html" class="sidebar-link">手写Promise解析</a></li><li><a href="/frontEnd/javascript/svelte-counter.html" class="sidebar-link">svelte尝鲜之计数器</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Node</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>React</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Vue</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>小程序</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>杂类</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>网络协议</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>Git</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>函数式编程</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>算法</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>设计模式</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>源码阅读</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="手写-promise"><a href="#手写-promise" aria-hidden="true" class="header-anchor">#</a> 手写 Promise</h1> <p>Promise 源自 ES6，异步处理函数，是目前比较流行的 JavaScript 异步编程解决方案之一</p> <div class="tip custom-block"><p><a href="http://es6.ruanyifeng.com/#docs/promise" target="_blank" rel="noopener noreferrer">Promise<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p></div> <h2 id="promises-a-规范"><a href="#promises-a-规范" aria-hidden="true" class="header-anchor">#</a> Promises/A+ 规范</h2> <blockquote><p>为实现者提供一个健全的、可互操作的 JavaScript Promise 的开放标准。</p></blockquote> <ul><li><a href="https://promisesaplus.com/" target="_blank" rel="noopener noreferrer">原文<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li> <li><a href="https://juejin.im/post/5c4b0423e51d4525211c0fbc" target="_blank" rel="noopener noreferrer">译文<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul> <h2 id="开发准备"><a href="#开发准备" aria-hidden="true" class="header-anchor">#</a> 开发准备</h2> <ul><li><p>状态<br>
+Promise 存在 3 种状态， 等待状态(PENDING)，执行状态(FULFILLED), 拒绝状态(REJECTED)</p></li> <li><p>Promise 类私有属性</p> <ul><li>_state 用于存储状态</li> <li>_value 用于储存执行状态(FULFILLED)中不可变的值</li> <li>_reason 用于储存拒绝状态(REJECTED)中不可变的值</li> <li>_onResolvedQueues 用于存储成功回调的函数</li> <li>_onRejectedQueues 用于存储失败回调的函数</li></ul></li> <li><p>示例解析</p></li></ul> <div class="language- extra-class"><pre class="language-text"><code>new Promise((resolve, reject) =&gt; {
+    setTimeout(() =&gt; {
+        resolve(1)
+    })
+}).then(res =&gt; {
+    console.log(res)
+}, err =&gt; {
+    console.log(err)
+})
+</code></pre></div><ol><li><code>Promise</code> 是一个构造函数，需要 <code>new</code> 去生成一个新实例，函数参数是一个函数</li> <li>拥有 <code>then</code> 方法，<code>then</code> 方法参数是一个函数</li></ol> <h2 id="开发"><a href="#开发" aria-hidden="true" class="header-anchor">#</a> 开发</h2> <h3 id="声明状态常量并创建一个简易的-promise-类"><a href="#声明状态常量并创建一个简易的-promise-类" aria-hidden="true" class="header-anchor">#</a> 声明状态常量并创建一个简易的 Promise 类</h3> <div class="language- extra-class"><pre class="language-text"><code>const PENDING = &quot;PENDING&quot;;
+const FULFILLED = &quot;FULFILLED&quot;;
+const REJECTED = &quot;REJECTED&quot;;
+
+class Promise {
+  constructor(executor) {
+    this._state = PENDING;
+    this._value = undefined;
+    thhis._reason = undefined;
+    this._onResolvedQueues = [];
+    this._onRejectedQueues = [];
+
+    const resolve = value =&gt; {
+        if (this._state === PENDING) {
+          this._state = FULFILLED;
+          this._value = value;
+          this._onResolvedQueues.forEach(fn =&gt; fn());
+        }
+      },
+      reject = reason =&gt; {
+        if (this._reason === PENDING) {
+          this._state = REJECTED;
+          this._reason = reason;
+          this._onRejectedQueues.forEach(fn =&gt; fn());
+        }
+      };
+    try {
+      executor(resolve, reject);
+    } catch (err) {
+      reject(err);
+    }
+  }
+}
+</code></pre></div><p>调用 下面代码</p> <div class="language- extra-class"><pre class="language-text"><code>new Promsie((resolve, reject) =&gt; {
+    // 省略...
+    resolve()
+}),
+</code></pre></div><p>即相当于执行<code>resolve()</code> 部分</p> <h3 id="开发-then-方法，then-方法参数为-onfulfilled-和-onrejected-2-个函数"><a href="#开发-then-方法，then-方法参数为-onfulfilled-和-onrejected-2-个函数" aria-hidden="true" class="header-anchor">#</a> 开发 then 方法，then 方法参数为 onFulfilled 和 onRejected 2 个函数</h3> <ul><li>起步阶段</li></ul> <div class="language- extra-class"><pre class="language-text"><code> // 声明 isFunction
+function isFunction(fn) {
+    return typeof fn === 'function'
+}
+
+// Promise 类中public方法
+then(onFulfilled, onRejected) {
+    // 先判断onFulfilled 和 onReject 是否为函数，非函数转成相应函数
+    onFulfilled = isFunction(onFulfilled) ? onFulfilled : value =&gt; value
+    onRejected = isFunction(onRejected)
+        ? onRejected
+        : err =&gt; {
+            throw err
+        }
+
+    // 创建一个新的Promise实例，并返回它
+    let promise = new Promise((resolve, reject) =&gt; {
+        // TODO:省略关键代码
+    })
+
+    return promise
+}
+</code></pre></div><div class="tip custom-block"><p>“创建新的 Promise 实例，并返回” - 用于形成链式调用，即 <code>new Promsie().then().then(). ... (省略函数参数)</code></p></div> <ul><li>处理新的 Promise 实例 传参函数
+根据 Promise 实例的 state 状态，执行相应函数</li></ul> <div class="language- extra-class"><pre class="language-text"><code>if (this._state === FULFILLED) {
+  setTimeout(() =&gt; {
+    try {
+      let result = onFulfilled(this._value);
+      // TODO:省略resolvePromise
+    } catch (err) {
+      reject(err);
+    }
+  });
+}
+if (this._state === REJECTED) {
+  setTimeout(() =&gt; {
+    try {
+      let result = onRejected(this._reason);
+      // TODO:省略resolvePromise
+    } catch (err) {
+      reject(err);
+    }
+  });
+}
+if (this._state === PENDING) {
+  this._onResolvedQueues.push(() =&gt; {
+    setTimeout(() =&gt; {
+      try {
+        let result = onFulfilled(this._value);
+        // TODO:省略resolvePromise
+      } catch (err) {
+        reject(err);
+      }
+    });
+  });
+  this._onRejectedQueues.push(() =&gt; {
+    setTimeout(() =&gt; {
+      try {
+        let result = onRejected(this._reason);
+        // TODO:省略resolvePromise
+      } catch (err) {
+        reject(err);
+      }
+    });
+  });
+}
+
+</code></pre></div><div class="tip custom-block"><ol><li>setTimeout 是为了保证执行函数是异步执行</li> <li>FULFILLED(执行状态)和 REJECTED(拒绝状态）则直接运行函数</li> <li>PENDING(等待状态) 分别收集 FULFILLED(执行状态)和 REJECTED(拒绝状态）的执行栈</li></ol></div> <div class="danger custom-block"><p>resolvePromise 函数用于处理新的实例(promise)与“父实例”处理结果(result)之间的关系</p></div> <ul><li>处理 resolvePromise 函数，参数包含新的实例(promise), 父实例处理结果(result), resolve 函数，reject 函数</li></ul> <div class="language- extra-class"><pre class="language-text"><code>// 调用resolvePromise
+resolvePromsie(promise, result, resolve, reject)
+</code></pre></div><p>resolvePromise 代码如下：</p> <div class="language- extra-class"><pre class="language-text"><code>// 声明isObject
+function isObject(obj) {
+    return typeof obj === 'object'
+}
+// Promise 类私有方法
+_resolvePromsie(promise, result, resolve, reject) {
+    if (promise === result) {
+      return reject(new TypeError('Chaining cycle detected for promise'))
+    }
+
+    let isExecuted = false
+    if (result !== null &amp;&amp; (isFunction(result) || isObject(result))) {
+      try {
+        let then = result.then
+        if (isFunction(then)) {
+          then.call(
+            result,
+            value =&gt; {
+              if (isExecuted) return
+              isExecuted = true
+              this._resolvePromsie(promise, value, resolve, reject)
+            },
+            err =&gt; {
+              if (isExecuted) return
+              isExecuted = true
+              reject(err)
+            }
+          )
+        } else {
+          resolve(result)
+        }
+      } catch (err) {
+        if (isExecuted) return
+        isExecuted = true
+        reject(err)
+      }
+    } else {
+      resolve(result)
+    }
+  }
+</code></pre></div><div class="tip custom-block"><ol><li>判断 result 和 promise 是否相等，防止循环引用</li> <li>isExecuted 用于保证 当前 promise 未被调用</li></ol></div> <h3 id="补充-promise-其他方法"><a href="#补充-promise-其他方法" aria-hidden="true" class="header-anchor">#</a> 补充 Promise 其他方法</h3> <p>其他方法已不需要额外特别开发，通过调用现有方法即可完成，故在此仅贴出代码。</p> <ul><li>catch</li></ul> <div class="language- extra-class"><pre class="language-text"><code>catch(fn) {
+    return this.then(null, fn)
+}
+</code></pre></div><ul><li>Promise.resolve 与 Promise.reject</li></ul> <div class="language- extra-class"><pre class="language-text"><code>static resolve(value) {
+    return new Promise((resolve, reject) =&gt; {
+        resolve(value)
+    })
+}
+static reject(err) {
+    return new Promise((resolve, reject) =&gt; {
+        reject(err)
+    })
+}
+</code></pre></div><ul><li>Promise.all</li></ul> <div class="language- extra-class"><pre class="language-text"><code>static all(promises) {
+  let arr = []
+  let i = 0
+  function processData(index, data) {
+    arr[index] = data
+    i++
+    if (i == promises.length) {
+      resolve(arr)
+    }
+  }
+  return new Promise((resolve, reject) =&gt; {
+    for (let i = 0; i &lt; promises.length; i++) {
+      promises[i].then(data =&gt; {
+        processData(i, data)
+      }, reject)
+    }
+  })
+}
+</code></pre></div><ul><li>Promise.race</li></ul> <div class="language- extra-class"><pre class="language-text"><code>static race(promises) {
+  return new Promise((resolve, reject) =&gt; {
+    for (let i = 0; i &lt; promises.length; i++) {
+      promises[i].then(resolve, reject)
+    }
+  })
+}
+</code></pre></div><h2 id="测试"><a href="#测试" aria-hidden="true" class="header-anchor">#</a> 测试</h2> <p>可以通过 promises-aplus-tests 来测试 promise 是否满足 Promises/A+ 规范</p> <blockquote><p><a href="https://github.com/promises-aplus/promises-tests#readme" target="_blank" rel="noopener noreferrer">promises-aplus-tests<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p></blockquote> <div class="danger custom-block"><p>全局安装 promises-aplus-tests 后，在文件添加如下代码, 然后执行 promises-aplus-tests + 文件名</p></div> <div class="language- extra-class"><pre class="language-text"><code>//promise的语法糖
+Promise.defer=Promise.deferred=function(){
+    let dfd={};
+    dfd.promise=new Promise((resolve,reject)=&gt;{
+        dfd.resolve=resolve;
+        dfd.reject=reject;
+    })
+    return dfd;
+}
+</code></pre></div><h2 id="参考文献"><a href="#参考文献" aria-hidden="true" class="header-anchor">#</a> 参考文献</h2> <ul><li><a href="https://promisesaplus.com/" target="_blank" rel="noopener noreferrer">Promises/A+<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li> <li><a href="https://github.com/Yangfan2016" target="_blank" rel="noopener noreferrer">Yangfan2016<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a> -<a href="https://juejin.im/post/5c4b0423e51d4525211c0fbc" target="_blank" rel="noopener noreferrer">【译】 Promises/A+ 规范<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li> <li><a href="https://juejin.im/user/5b2c66b36fb9a00e406a943f" target="_blank" rel="noopener noreferrer">afan<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a> - <a href="https://juejin.im/post/5b5ad5755188251ad06b735c#heading-5" target="_blank" rel="noopener noreferrer">根据 Promises/A+规范 手写 Promsie<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ul> <blockquote><p>代码仓库
+<a href="https://github.com/sillyY/promise" target="_blank" rel="noopener noreferrer">promise<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p></blockquote> <div id="vcomments"></div></div> <footer class="page-edit"><!----> <div class="last-updated"><span class="prefix">上次更新: </span> <span class="time">2019-11-12 22:18:56</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/frontEnd/javascript/jump-loop.html" class="prev">
+          跳出循环的三种方法(break-return-continue)
+        </a></span> <span class="next"><a href="/frontEnd/javascript/promise-analyze.html">
+          手写Promise解析
+        </a>
+        →
+      </span></p></div> </main></div><div class="global-ui"><!----></div></div>
+    <script src="/assets/js/app.8dae8355.js" defer></script><script src="/assets/js/2.dc92909d.js" defer></script><script src="/assets/js/20.86ab84d4.js" defer></script><script src="/assets/js/6.a180e42e.js" defer></script>
+  </body>
+</html>
